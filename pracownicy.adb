@@ -47,19 +47,24 @@ package body Pracownicy is
                                 & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
             end if;
 
-            Magazyn.magazyn_task.dodajDoMagazynu(p, sukces);
-            if Config.tryb_symulacji = Config.gadatliwy then
-               if sukces then
-                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " zlozyl w magazynie: " & Integer'Image(z.pierwArg) &
-                                     " " & znak & " " &Integer'Image(z.drugiArg) & " = " & Integer'Image(p));
-               else
-                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal zlozyc w magazynie produkt, ale magazyn jest pelny.");
-               end if;
+            sukces := False;
 
-            else
+            while sukces = False loop
+               Magazyn.magazyn_task.dodajDoMagazynu(p, sukces);
                if Config.tryb_symulacji = Config.gadatliwy then
-                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal wziac zadanie z listy, ale lista jest pusta.");
+                  if sukces then
+                     Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " zlozyl w magazynie: " & Integer'Image(z.pierwArg) &
+                                        " " & znak & " " &Integer'Image(z.drugiArg) & " = " & Integer'Image(p));
+                  else
+                     Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal zlozyc w magazynie produkt, ale magazyn jest pelny." & Integer'Image(p));
+                  end if;
                end if;
+               delay Config.opoznienie_pracownikow;
+            end loop;
+
+         else
+            if Config.tryb_symulacji = Config.gadatliwy then
+               Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal wziac zadanie z listy, ale lista jest pusta.");
             end if;
          end if;
 

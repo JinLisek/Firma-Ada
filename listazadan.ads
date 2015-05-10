@@ -8,6 +8,7 @@ package ListaZadan is
       pierwArg: Integer;
       drugiArg : Integer;
       dzial : Config.Dzialanie;
+      wynik : Integer;
    end record;
 
    type Tablica_Zadan_Typ is array (Positive range <>) of Zadanie;

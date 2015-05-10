@@ -7,6 +7,7 @@ with Magazyn;
 with Prezes;
 with Pracownicy;
 with Klienci;
+with Sumer;
 
 package body Interfejs is
    znak : Character;
@@ -52,7 +53,7 @@ package body Interfejs is
                end loop;
 
                for t of Klienci.Tablica_Taskow loop
-                  t.koniec;
+                 t.koniec;
                end loop;
 
                Prezes.prezes_task.koniec;

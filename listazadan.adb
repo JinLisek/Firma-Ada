@@ -40,7 +40,7 @@ package body ListaZadan is
          or
             when ilosc = 0 =>
                accept wezZListy (z : out Zadanie; sukces : out Boolean) do
-                  z:= (0, 0, Config.dodawanie);
+                  z:= (0, 0, Config.dodawanie, 0);
                   sukces := False;
                end wezZListy;
 

@@ -43,26 +43,30 @@ package body Prezes is
                end if;
             end if;
 
-            z := (liczba1, liczba2, dzialanie);
-            ListaZadan.lista_task.dodajDoListy(z, sukces);
+            z := (liczba1, liczba2, dzialanie, 0);
 
-            if Config.tryb_symulacji = Config.gadatliwy then
-               if sukces then
-                  if z.dzial = Config.dodawanie then
-                     znak := '+';
-                  elsif
-                    z.dzial = Config.odejmowanie then
-                     znak := '-';
-                  else
-                     znak := '*';
-                  end if;
-
-                  Text_IO.Put_Line("Prezes dodal zadanie: " & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
-               else
-                  Text_IO.Put_Line("Prezes probowal dodac zadanie do listy, ale jest ona pelna.");
-               end if;
+            if z.dzial = Config.dodawanie then
+               znak := '+';
+            elsif z.dzial = Config.odejmowanie then
+               znak := '-';
+            else
+               znak := '*';
             end if;
-            delay Config.opoznienie_prezesa;
+
+            sukces := False;
+
+            while sukces = False loop
+               ListaZadan.lista_task.dodajDoListy(z, sukces);
+
+               if Config.tryb_symulacji = Config.gadatliwy then
+                  if sukces then
+                     Text_IO.Put_Line("Prezes dodal zadanie: " & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
+                  else
+                     Text_IO.Put_Line("Prezes probowal dodac zadanie do listy, ale jest ona pelna." & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
+                  end if;
+               end if;
+               delay Config.opoznienie_prezesa;
+            end loop;
 
          end select;
       end loop PetlaTasku;

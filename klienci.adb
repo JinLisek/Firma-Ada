@@ -13,6 +13,7 @@ package body Klienci is
       accept ustawId (index : in Natural) do
          id := index;
       end ustawId;
+
       PetlaTasku:
       loop
          select
