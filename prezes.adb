@@ -33,16 +33,6 @@ package body Prezes is
                dzialanie := Config.mnozenie;
             end if;
 
-            if liczba2 < 0 then
-               if dzialanie = Config.dodawanie then
-                  liczba2 := liczba2 * (-1);
-                  dzialanie := Config.odejmowanie;
-               elsif dzialanie = Config.odejmowanie then
-                  liczba2 := liczba2 * (-1);
-                  dzialanie := Config.dodawanie;
-               end if;
-            end if;
-
             z := (liczba1, liczba2, dzialanie, 0);
 
             if z.dzial = Config.dodawanie then

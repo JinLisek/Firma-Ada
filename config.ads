@@ -11,4 +11,6 @@ package Config is
    opoznienie_prezesa : constant Duration := 3.0; --sekundy
    opoznienie_pracownikow : constant Duration := 3.0;
    opoznienie_klientow : constant Duration := 5.0;
+   opoznienie_sumera : constant Duration := 0.5;
+   psucie_sumera : constant Float := 1.0;
 end Config;

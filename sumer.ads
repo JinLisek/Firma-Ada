@@ -1,9 +1,12 @@
+with Ada.Numerics.Float_Random;
 with Config;
+with ListaZadan;
 
 package Sumer is
    task type sumer_task is
       entry ustawId(index : in Natural);
-      entry koniec;
+      --entry koniec;
+      entry wykonajNaMaszynie(z : in out ListaZadan.Zadanie; sukces : out Boolean);
    end sumer_task;
 
 
