@@ -9,8 +9,9 @@ package Config is
    liczba_klientow : constant Natural := 1;
    liczba_sumerow : constant Positive := 2;
    opoznienie_prezesa : constant Duration := 3.0; --sekundy
-   opoznienie_pracownikow : constant Duration := 3.0;
+   opoznienie_pracownikow : constant Duration := 1.0;
    opoznienie_klientow : constant Duration := 5.0;
    opoznienie_sumera : constant Duration := 0.5;
-   psucie_sumera : constant Float := 1.0;
+   opoznienie_serwisanta : constant Duration := 10.0;
+   psucie_sumera : constant Natural := 50;
 end Config;

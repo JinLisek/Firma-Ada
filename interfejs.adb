@@ -8,6 +8,7 @@ with Prezes;
 with Pracownicy;
 with Klienci;
 with Sumer;
+with Serwisant;
 
 package body Interfejs is
    znak : Character;

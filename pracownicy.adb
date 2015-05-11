@@ -13,11 +13,13 @@ package body Pracownicy is
       sukces : Boolean;
       znak : Character;
       id : Natural;
+      id_sumera : Positive;
    begin
       accept ustawId(index : in Natural) do
          id := index;
       end ustawId;
 
+      Losowanie_Sumer.Reset(ziarenko_sumer);
 
 
       PetlaTasku:
@@ -30,6 +32,7 @@ package body Pracownicy is
          end select;
 
          ListaZadan.lista_task.wezZListy(z, sukces);
+
          if sukces then
 
             if z.dzial = Config.odejmowanie then
@@ -48,8 +51,32 @@ package body Pracownicy is
                                 & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
             end if;
 
+
+
+            sukces := False;
+
             if z.dzial = Config.dodawanie then
-               Sumer.Tablica_Taskow(1).wykonajNaMaszynie(z => z, sukces => sukces);
+               losowy_sumer:= Losowanie_Sumer.Random(ziarenko_sumer);
+               id_sumera := Positive(losowy_sumer);
+
+               while sukces = False loop
+                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " idzie do sumera" & Positive'Image(Positive(losowy_sumer)));
+                  Sumer.Tablica_Taskow(Integer(losowy_sumer)).wykonajNaMaszynie(z => z, sukces => sukces);
+                  if sukces = False then
+                     id_sumera := id_sumera + 1;
+                     Text_IO.Put_Line(Positive'Image(id_sumera) & " " & Positive'Image(Config.liczba_sumerow));
+                     if id_sumera > Config.liczba_sumerow then
+                        Text_IO.Put_Line("r");
+                        losowy_sumer := 1;
+                        id_sumera := 1;
+                     else
+                        losowy_sumer := losowy_sumer + 1;
+                     end if;
+                     Text_IO.Put_Line(Positive'Image(Integer(losowy_sumer)));
+                  end if;
+
+               end loop;
+
             else
                z.wynik := z.pierwArg * z.drugiArg;
             end if;
