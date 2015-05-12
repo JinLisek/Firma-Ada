@@ -48,7 +48,7 @@ package body Prezes is
                   if sukces then
                      Text_IO.Put_Line("Prezes dodal zadanie: " & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
                   else
-                     Text_IO.Put_Line("Prezes probowal dodac zadanie do listy, ale jest ona pelna." & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
+                     null;--Text_IO.Put_Line("Prezes probowal dodac zadanie do listy, ale jest ona pelna." & Integer'Image(z.pierwArg) & " " & znak & " " & Integer'Image(z.drugiArg));
                   end if;
                end if;
                delay Config.opoznienie_prezesa;

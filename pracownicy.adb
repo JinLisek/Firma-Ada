@@ -56,8 +56,14 @@ package body Pracownicy is
                id_sumera := Positive(losowy_sumer);
 
                while sukces = False loop
-                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " idzie do sumera" & Positive'Image(id_sumera));
-                  Sumer.Tablica_Taskow(id_sumera).wykonajNaMaszynie(z => z, sukces => sukces);
+
+                  select
+                     Sumer.Tablica_Taskow(id_sumera).wykonajNaMaszynie(z => z, sukces => sukces);
+                  or
+                     delay Config.oczekiwanie_na_sumer;
+                     sukces := False;
+                  end select;
+
                   if sukces = False then
                      id_sumera := id_sumera + 1;
                      if id_sumera > Config.liczba_sumerow then
@@ -72,8 +78,25 @@ package body Pracownicy is
                id_iloczynera := Positive(losowy_iloczyner);
 
                while sukces = False loop
-                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " idzie do iloczynera" & Positive'Image(id_iloczynera));
-                  Iloczyner.Tablica_Taskow(id_iloczynera).wykonajNaMaszynie(z => z, sukces => sukces);
+
+
+                  select
+                     Iloczyner.Tablica_Taskow(id_iloczynera).pomoz;
+                     if Config.tryb_symulacji = Config.gadatliwy then
+                       Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " pomaga przy iloczynerze"
+                                        & Integer'Image(id_iloczynera));
+                     end if;
+                  else
+                     null;
+                  end select;
+
+                  select
+                     Iloczyner.Tablica_Taskow(id_iloczynera).wykonajNaMaszynie(z => z, sukces => sukces);
+                  or
+                     delay Config.oczekiwanie_na_iloczyner;
+                     sukces := False;
+                  end select;
+
                   if sukces = False then
                      id_iloczynera := id_iloczynera + 1;
                      if id_iloczynera > Config.liczba_iloczynerow then
@@ -93,7 +116,7 @@ package body Pracownicy is
                      Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " zlozyl w magazynie: " & Integer'Image(z.pierwArg) &
                                         " " & znak & " " &Integer'Image(z.drugiArg) & " = " & Integer'Image(z.wynik));
                   else
-                     Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal zlozyc w magazynie produkt, ale magazyn jest pelny." & Integer'Image(z.wynik));
+                     null;--Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal zlozyc w magazynie produkt, ale magazyn jest pelny." & Integer'Image(z.wynik));
                   end if;
                end if;
                delay Config.opoznienie_pracownikow;
@@ -101,7 +124,7 @@ package body Pracownicy is
 
          else
             if Config.tryb_symulacji = Config.gadatliwy then
-               Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal wziac zadanie z listy, ale lista jest pusta.");
+               null;--Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " probowal wziac zadanie z listy, ale lista jest pusta.");
             end if;
          end if;
 

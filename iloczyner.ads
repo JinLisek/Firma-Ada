@@ -13,6 +13,7 @@ package Iloczyner is
       entry ustawId(index : in Natural);
       entry koniec;
       entry wykonajNaMaszynie(z : in out ListaZadan.Zadanie; sukces : out Boolean);
+      entry pomoz;
    end iloczyner_task;
 
 

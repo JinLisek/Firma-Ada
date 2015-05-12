@@ -36,10 +36,12 @@ package body Sumer is
                if Natural(losowe_pstwo) <= Config.psucie_sumera then
                   sukces := False;
                   zepsuta := True;
-                  Text_IO.Put_Line("Sumer" & Integer'Image(id) & " sie zepsul.");
+                  if Config.tryb_symulacji = Config.gadatliwy then
+                     Text_IO.Put_Line("Sumer" & Integer'Image(id) & " sie zepsul.");
+                  end if;
                else
                   z.wynik := z.pierwArg + z.drugiArg;
-                  Text_IO.Put_Line("Sumer" & Integer'Image(id) & " obliczyl: " & Integer'Image(z.wynik));
+                  --Text_IO.Put_Line("Sumer" & Integer'Image(id) & " obliczyl: " & Integer'Image(z.wynik));
                   sukces := True;
                end if;
 
@@ -49,7 +51,9 @@ package body Sumer is
          if zepsuta = True then
             Serwisant.serwisant_task.napraw;
             zepsuta := False;
-            Text_IO.Put_Line("Sumer" & Integer'Image(id) & " zostal naprawiony przez serwisanta.");
+            if Config.tryb_symulacji = Config.gadatliwy then
+               Text_IO.Put_Line("Sumer" & Integer'Image(id) & " zostal naprawiony przez serwisanta.");
+            end if;
          end if;
 
       end loop PetlaTasku;

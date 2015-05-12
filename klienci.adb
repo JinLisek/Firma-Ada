@@ -29,7 +29,7 @@ package body Klienci is
             if sukces then
                Text_IO.Put_Line("Klient" & Integer'Image(id) & " wzial z magazynu produkt:" & Integer'Image(p));
             else
-               Text_IO.Put_Line("Klient" & integer'Image(id) & " probowal wziac z magazynu produkt, ale magazyn jest pusty.");
+               null;--Text_IO.Put_Line("Klient" & integer'Image(id) & " probowal wziac z magazynu produkt, ale magazyn jest pusty.");
             end if;
          end if;
 
