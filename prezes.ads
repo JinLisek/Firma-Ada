@@ -7,7 +7,7 @@ package Prezes is
    liczba2 : Integer;
    dzialanie : Config.Dzialanie;
    type Rozmiar_Losowania_Liczby is range -100..100;
-   type Rozmiar_Losowania_Dzialania is range 1..3;
+   type Rozmiar_Losowania_Dzialania is range 1..2;
    package Losowanie_Liczba is new Ada.Numerics.Discrete_Random(Rozmiar_Losowania_Liczby);
    package Losowanie_Dzialanie is new Ada.Numerics.Discrete_Random(Rozmiar_Losowania_Dzialania);
    ziarenko_liczba : Losowanie_Liczba.Generator;

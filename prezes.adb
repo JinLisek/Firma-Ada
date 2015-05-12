@@ -27,8 +27,6 @@ package body Prezes is
             losowe_dzialanie := Losowanie_Dzialanie.Random(ziarenko_dzialanie);
             if losowe_dzialanie = 1 then
                dzialanie := Config.dodawanie;
-            elsif losowe_dzialanie = 2 then
-               dzialanie := Config.odejmowanie;
             else
                dzialanie := Config.mnozenie;
             end if;
@@ -37,8 +35,6 @@ package body Prezes is
 
             if z.dzial = Config.dodawanie then
                znak := '+';
-            elsif z.dzial = Config.odejmowanie then
-               znak := '-';
             else
                znak := '*';
             end if;

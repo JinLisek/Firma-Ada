@@ -3,6 +3,7 @@ with Config;
 with ListaZadan;
 with Magazyn;
 with Sumer;
+with Iloczyner;
 use type Config.Dzialanie;
 use type Config.Tryb;
 
@@ -14,13 +15,14 @@ package body Pracownicy is
       znak : Character;
       id : Natural;
       id_sumera : Positive;
+      id_iloczynera : Positive;
    begin
       accept ustawId(index : in Natural) do
          id := index;
       end ustawId;
 
       Losowanie_Sumer.Reset(ziarenko_sumer);
-
+      Losowanie_Iloczyner.Reset(ziarenko_iloczyner);
 
       PetlaTasku:
       loop
@@ -34,12 +36,6 @@ package body Pracownicy is
          ListaZadan.lista_task.wezZListy(z, sukces);
 
          if sukces then
-
-            if z.dzial = Config.odejmowanie then
-               z.drugiArg := z.drugiArg * (-1);
-               z.dzial := Config.dodawanie;
-            end if;
-
             if z.dzial = Config.dodawanie then
                znak := '+';
             else
@@ -60,25 +56,32 @@ package body Pracownicy is
                id_sumera := Positive(losowy_sumer);
 
                while sukces = False loop
-                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " idzie do sumera" & Positive'Image(Positive(losowy_sumer)));
-                  Sumer.Tablica_Taskow(Integer(losowy_sumer)).wykonajNaMaszynie(z => z, sukces => sukces);
+                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " idzie do sumera" & Positive'Image(id_sumera));
+                  Sumer.Tablica_Taskow(id_sumera).wykonajNaMaszynie(z => z, sukces => sukces);
                   if sukces = False then
                      id_sumera := id_sumera + 1;
-                     Text_IO.Put_Line(Positive'Image(id_sumera) & " " & Positive'Image(Config.liczba_sumerow));
                      if id_sumera > Config.liczba_sumerow then
-                        Text_IO.Put_Line("r");
-                        losowy_sumer := 1;
                         id_sumera := 1;
-                     else
-                        losowy_sumer := losowy_sumer + 1;
                      end if;
-                     Text_IO.Put_Line(Positive'Image(Integer(losowy_sumer)));
                   end if;
 
                end loop;
 
             else
-               z.wynik := z.pierwArg * z.drugiArg;
+               losowy_iloczyner:= Losowanie_Iloczyner.Random(ziarenko_iloczyner);
+               id_iloczynera := Positive(losowy_iloczyner);
+
+               while sukces = False loop
+                  Text_IO.Put_Line("Pracownik" & Integer'Image(id) & " idzie do iloczynera" & Positive'Image(id_iloczynera));
+                  Iloczyner.Tablica_Taskow(id_iloczynera).wykonajNaMaszynie(z => z, sukces => sukces);
+                  if sukces = False then
+                     id_iloczynera := id_iloczynera + 1;
+                     if id_iloczynera > Config.liczba_iloczynerow then
+                        id_iloczynera := 1;
+                     end if;
+                  end if;
+
+               end loop;
             end if;
 
             sukces := False;

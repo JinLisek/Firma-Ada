@@ -1,15 +1,13 @@
 with Text_IO;
 with Config;
 with ListaZadan;
-with Magazyn;
 with Serwisant;
 use type Config.Dzialanie;
 use type Config.Tryb;
-use ListaZadan;
 
-package body Sumer is
+package body Iloczyner is
 
-   task body sumer_task is
+   task body iloczyner_task is
       id : Natural;
       zepsuta : Boolean;
    begin
@@ -23,7 +21,6 @@ package body Sumer is
 
       PetlaTasku:
       loop
-
          select
             accept koniec;
                exit;
@@ -31,15 +28,17 @@ package body Sumer is
             accept wykonajNaMaszynie (z : in out ListaZadan.Zadanie; sukces : out Boolean) do
                losowe_pstwo := Losowanie_Pstwo.Random(ziarenko_pstwo);
 
-               delay Config.opoznienie_sumera;
 
-               if Natural(losowe_pstwo) <= Config.psucie_sumera then
+
+               delay Config.opoznienie_iloczynera;
+
+               if Natural(losowe_pstwo) <= Config.psucie_iloczynera then
                   sukces := False;
                   zepsuta := True;
-                  Text_IO.Put_Line("Sumer" & Integer'Image(id) & " sie zepsul.");
+                  Text_IO.Put_Line("Iloczyner" & Integer'Image(id) & " sie zepsul.");
                else
-                  z.wynik := z.pierwArg + z.drugiArg;
-                  Text_IO.Put_Line("Sumer" & Integer'Image(id) & " obliczyl: " & Integer'Image(z.wynik));
+                  z.wynik := z.pierwArg * z.drugiArg;
+                  Text_IO.Put_Line("Iloczyner" & Integer'Image(id) & " obliczyl: " & Integer'Image(z.wynik));
                   sukces := True;
                end if;
 
@@ -49,9 +48,9 @@ package body Sumer is
          if zepsuta = True then
             Serwisant.serwisant_task.napraw;
             zepsuta := False;
-            Text_IO.Put_Line("Sumer" & Integer'Image(id) & " zostal naprawiony przez serwisanta.");
+            Text_IO.Put_Line("Iloczyner" & Integer'Image(id) & " zostal naprawiony przez serwisanta.");
          end if;
 
       end loop PetlaTasku;
-   end sumer_task;
-end Sumer;
+   end iloczyner_task;
+end Iloczyner;

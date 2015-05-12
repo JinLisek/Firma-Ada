@@ -9,6 +9,7 @@ with Pracownicy;
 with Klienci;
 with Sumer;
 with Serwisant;
+with Iloczyner;
 
 package body Interfejs is
    znak : Character;
@@ -43,6 +44,12 @@ package body Interfejs is
          index := index + 1;
       end loop;
 
+      index := 1;
+
+      for t of Iloczyner.Tablica_Taskow loop
+         t.ustawId(index);
+         index := index + 1;
+      end loop;
 
       if Config.tryb_symulacji = Config.spokojny then
          Text_IO.Put_Line("--TRYB SPOKOJNY--");
